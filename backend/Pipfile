@@ -8,6 +8,11 @@ django = "*"
 djangorestframework = "*"
 psycopg2-binary = "*"
 psycopg-binary = "*"
+python-dotenv = "*"
+djangorestframework-simplejwt = "*"
+whitenoise = "*"
+django-cors-headers = "*"
+django-cpf = "*"
 
 [dev-packages]
 pre-commit = "~=2.17"

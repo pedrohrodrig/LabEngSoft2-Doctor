@@ -15,17 +15,22 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5%c!^&#1lp5%1ko68j&u))r520vsi^*h!#6lb#&!%rtxp)lc%t'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-5%c!^&#1lp5%1ko68j&u))r520vsi^*h!#6lb#&!%rtxp)lc%t")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "whitenoise.runserver_nostatic",
     'rest_framework',
     'corsheaders',
     'Doctor',
@@ -81,9 +87,13 @@ WSGI_APPLICATION = 'project_Doctor.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DB_NAME", "doctor_service_db"),
+        "USER": os.getenv("DB_USER", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD", "postgres"),
+        "HOST": os.getenv("DB_HOST", "doctor-service-db.cpssys6guvh3.sa-east-1.rds.amazonaws.com"),
+        "PORT": os.getenv("DB_PORT", "5432"),
     }
 }
 
@@ -128,3 +138,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": ("rest_framework_simplejwt.authentication.JWTTokenUserAuthentication",),
+}
+
+SIMPLE_JWT = {"SIGNING_KEY": os.getenv("SIGNING_KEY", "oc61xp)1pd#r5%%1a%_+nh2mo!rxd!iv(wc7-91*vs6t4oa#t%")}
