@@ -8,7 +8,7 @@ echo "cd backend..."
 
 echo "Installing pipenv..."
 # Skip actual installation in dry run
-[ "$DRY_RUN" != "true" ] && python3 -m pip install pipenv 
+[ "$DRY_RUN" != "true" ] && sudo -H pip install -U pipenv
 
 echo "Installing dependencies..."
 # Skip actual installation in dry run
@@ -17,6 +17,9 @@ echo "Installing dependencies..."
 echo "Running migrations..."
 # Skip actual migrations in dry run
 [ "$DRY_RUN" != "true" ] && pipenv run python manage.py migrate
+
+echo "Install screen"
+sudo apt install screen
 
 echo "Runserver..."
 # Skip actual restart in dry run
