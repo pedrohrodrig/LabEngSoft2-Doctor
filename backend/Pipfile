@@ -10,6 +10,8 @@ psycopg2-binary = "*"
 psycopg-binary = "*"
 python-dotenv = "*"
 django-cors-headers = "*"
+django-cpf = "*"
+django-agenda = "*"
 
 [dev-packages]
 pre-commit = "~=2.17"
