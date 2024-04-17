@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'Doctor',
     'cpf_field',
+    'django_agenda',
 ]
 
 MIDDLEWARE = [
